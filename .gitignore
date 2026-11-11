@@ -1,0 +1,22 @@
+# Build output
+build/
+lab_tracker
+*.o
+*.d
+*.exe
+
+# Runtime data created by running the program
+data/inventory.txt
+data/stock_report.txt
+
+# Temporary files created by unit tests
+test_data_tmp.txt
+test_report_tmp.txt
+
+# Editor / OS files
+*.swp
+*~
+.vscode/
+.idea/
+.DS_Store
+core
