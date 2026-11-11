@@ -1,0 +1,40 @@
+digraph architecture {
+    rankdir=TB;
+    node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=11, fillcolor="#eef3fb", color="#4a6fa5"];
+    edge [fontname="Helvetica", fontsize=9, color="#555555"];
+
+    user   [label="User\n(lab student / lab assistant)", shape=ellipse, fillcolor="#fff4d6", color="#c9a227"];
+
+    subgraph cluster_app {
+        label="Application (C, src/ + include/)"; fontname="Helvetica"; style="rounded"; color="#4a6fa5";
+        main  [label="main.c\nstart-up, menu loop, shutdown"];
+        ui    [label="ui.c / ui.h\nmenu, prompts, input retries,\ninteractive handlers"];
+        inv   [label="inventory.c / inventory.h\nissue, return, search,\nstock level, calculations"];
+        val   [label="validation.c / validation.h\nname, number, range checks,\nstring helpers"];
+        fh    [label="file_handler.c / file_handler.h\nsave and load, file validation"];
+        rep   [label="report.c / report.h\nstock, issued and borrower reports"];
+        types [label="lab_types.h\nstructs, enums, constants", fillcolor="#f2f2f2", color="#888888"];
+    }
+
+    inv_file [label="data/inventory.txt\n(inventory + issued records)", shape=note, fillcolor="#e6f4ea", color="#2e7d32"];
+    rep_file [label="data/stock_report.txt\n(saved report)", shape=note, fillcolor="#e6f4ea", color="#2e7d32"];
+    screen   [label="Screen output\n(menus, reports, messages)", shape=box, fillcolor="#fde8e8", color="#b23b3b"];
+
+    user -> main   [label="runs"];
+    user -> ui     [label="keyboard input", dir=both];
+    main -> ui     [label="calls handlers"];
+    main -> fh     [label="load / save"];
+    ui -> inv      [label="operations"];
+    ui -> rep      [label="reports"];
+    ui -> fh       [label="save after change"];
+    ui -> val      [label="validate input"];
+    inv -> val     [label="checks"];
+    fh -> inv      [label="catalogue checks"];
+    fh -> val      [label="parse / validate"];
+    rep -> inv     [label="levels, percentages"];
+    fh -> inv_file [label="read / write", dir=both];
+    rep -> rep_file [label="write"];
+    rep -> screen  [label="stdout"];
+    ui -> screen;
+    types -> inv   [style=dashed, arrowhead=none];
+}

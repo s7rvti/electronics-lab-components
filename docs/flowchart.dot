@@ -1,0 +1,50 @@
+digraph flow {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11, style="filled", fillcolor="#eef3fb", color="#4a6fa5", shape=box, style="rounded,filled"];
+    edge [fontname="Helvetica", fontsize=9, color="#555555"];
+
+    start   [label="Start", shape=ellipse, fillcolor="#e6f4ea"];
+    load    [label="Choose data file\n(argument or default)\nloadInventory()"];
+    loaded  [label="Load OK?", shape=diamond, fillcolor="#fff4d6"];
+    fresh   [label="initInventory()\nfull stock\n(warn if file damaged)"];
+    menu    [label="Show menu"];
+    read    [label="Read choice\n(readIntegerInRange)"];
+    valid   [label="Valid\nwhole number\nin range?", shape=diamond, fillcolor="#fff4d6"];
+    err     [label="Show error,\nask again\n(max 3 attempts)", fillcolor="#fde8e8"];
+    which   [label="Which choice?", shape=diamond, fillcolor="#fff4d6"];
+    issue   [label="handleIssue\nname > component > type > qty\nissueComponent()"];
+    ret     [label="handleReturn\nname > component\nholds any? > returnComponent()"];
+    view    [label="View stock / issued /\nsearch / specs"];
+    rpt     [label="Save report\nto file"];
+    changed [label="Data changed?", shape=diamond, fillcolor="#fff4d6"];
+    save    [label="saveInventory()"];
+    msg     [label="Show success\nor error message"];
+    exitq   [label="Exit chosen or\ninput closed?", shape=diamond, fillcolor="#fff4d6"];
+    final   [label="saveInventory()\n\"Goodbye!\""];
+    end     [label="End", shape=ellipse, fillcolor="#e6f4ea"];
+
+    start -> load -> loaded;
+    loaded -> menu  [label="yes"];
+    loaded -> fresh [label="no"];
+    fresh -> menu;
+    menu -> read -> valid;
+    valid -> err   [label="no"];
+    err -> menu;
+    valid -> which [label="yes"];
+    which -> issue [label="1"];
+    which -> ret   [label="2"];
+    which -> view  [label="3-6"];
+    which -> rpt   [label="7"];
+    which -> exitq [label="0"];
+    issue -> changed;
+    ret -> changed;
+    view -> msg;
+    rpt -> msg;
+    changed -> save [label="yes"];
+    changed -> msg  [label="no / failed"];
+    save -> msg;
+    msg -> exitq;
+    exitq -> menu  [label="no"];
+    exitq -> final [label="yes"];
+    final -> end;
+}
