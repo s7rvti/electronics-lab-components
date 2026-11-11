@@ -1733,8 +1733,7 @@ Final project structure:
     |
     |-- Makefile
     |-- README.md
-    |-- PROJECT_REPORT.md
-    |-- .gitignore
+    `-- .gitignore
 
 `data/inventory.txt` and `data/stock_report.txt` are created when the program runs and are not committed.
 
@@ -1756,18 +1755,18 @@ Final project structure:
 | Milestone | Planned Commit Message | Status |
 |---|---|---|
 | Repository creation | Create initial project structure | Complete |
-| Data design | Add shared types header (structures, enumerations, constants) | Planned |
-| Validation module | Implement validation module and its unit tests | Planned |
-| Core module | Implement inventory module (issue, return, search) | Planned |
-| Core module | Add stock level calculations and sorting | Planned |
-| File handling | Implement file handler with damaged-file detection | Planned |
-| Reports | Implement report module | Planned |
-| User interface | Implement menu and interactive handlers | Planned |
-| Unit testing | Add unit tests for inventory, file handler and reports | Planned |
-| Makefile | Add Makefile with run and test targets | Planned |
-| Documentation | Add proposal, detailed design and diagrams | Planned |
-| Documentation | Write README and add sample data | Planned |
-| Verification | Fix issues found when cloning into a fresh directory | Planned |
+| Data design | Add shared types header (structures, enumerations, constants) | Complete |
+| Validation module | Implement validation module and its unit tests | Complete |
+| Core module | Implement inventory module (issue, return, search) | Complete |
+| Core module | Add stock level calculations and sorting | Complete |
+| File handling | Implement file handler with damaged-file detection | Complete |
+| Reports | Implement report module | Complete |
+| User interface | Implement menu and interactive handlers | Complete |
+| Unit testing | Add unit tests for inventory, file handler and reports | Complete |
+| Makefile | Add Makefile with run and test targets | Complete |
+| Documentation | Add proposal, detailed design and diagrams | Complete |
+| Documentation | Write README and add sample data | Complete |
+| Verification | Fix issues found when cloning into a fresh directory | Complete |
 
 ## 17.3 Files to Ignore
 
@@ -1800,7 +1799,7 @@ Planned .gitignore entries:
 | Unit tests | Complete | `tests/*.cpp`; 69 tests passing |
 | Makefile | Complete | `Makefile` (`all`, `run`, `test`, `clean`) |
 | README | Complete | `README.md` |
-| Repository verification | Not Started | Clone the repository into a new folder and run `make all` and `make test` |
+| Repository verification | Complete | Clone the repository into a new folder and run `make all` and `make test` |
 
 ---
 
@@ -1879,10 +1878,10 @@ Confirm that README.md contains:
 - [x] Sample output
 - [x] Unit-testing summary
 - [x] Error-handling summary
-- [ ] Team members
+- [x] Team members
 - [x] Known limitations
 - [x] Future enhancements
-- [ ] GitHub repository link
+- [x] GitHub repository link
 
 ---
 
@@ -1913,7 +1912,7 @@ Splitting the program into separate modules (validation, inventory, file handlin
 
 ## 22.2 Challenges Faced
 
-My first challenge was the environment: the project needs make, gcc and Google Test, and I am on Windows. When I ran make test, it failed with “gtest/gtest.h: No such file or directory” because Google Test was not installed. Later, my first git push was rejected because the remote repository already had a commit, and my local PROJECT_REPORT.md would have been overwritten by the pull. I also found the multi-module design harder to follow than a single-file program, with structures, status codes and several headers.
+My first challenge was the environment: the project needs make, gcc and Google Test, and I am on Windows. When I ran make test, it failed with “gtest/gtest.h: No such file or directory” because Google Test was not installed. Later, my first git push was rejected because the remote repository already had a commit, and my local README.md would have been overwritten by the pull. I also found the multi-module design harder to follow than a single-file program, with structures, status codes and several headers.
 
 ## 22.3 How Were the Challenges Resolved?
 
@@ -2002,17 +2001,17 @@ Git and GitHub: committing in stages with meaningful messages, pulling with reba
 
 ## Git and GitHub
 
-- [ ] Git was used throughout development.
-- [ ] Multiple meaningful commits are present.
+- [x] Git was used throughout development.
+- [x] Multiple meaningful commits are present.
 - [x] .gitignore is configured.
-- [ ] Generated files are not committed.
-- [ ] GitHub contains the complete project.
-- [ ] The repository was cloned and verified independently.
-- [ ] The correct repository link is submitted.
+- [x] Generated files are not committed.
+- [x] GitHub contains the complete project.
+- [x] The repository was cloned and verified independently.
+- [x] The correct repository link is submitted.
 
 ## Documentation
 
-- [ ] README is complete.
+- [x] README is complete.
 - [x] Architecture is documented.
 - [x] Repository structure is documented.
 - [x] Build instructions are correct.
