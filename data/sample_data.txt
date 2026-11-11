@@ -1,0 +1,14 @@
+85
+92
+0
+48
+5
+30
+Amit 0 10k 5
+Amit 3 BC547 2
+Riya 0 1k 10
+Riya 1 100nF 8
+Zoya 4 IRF540 25
+Karan 5 - 170
+Meera 2 100uH 20
+Dev 2 10mH 10
