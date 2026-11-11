@@ -1,59 +1,3 @@
-# Lab Component Tracker
-
-A C program that logs who has borrowed which electronic components from a college lab, checks stock before issuing, tracks returns, warns when stock runs low, and keeps everything saved in a text file between runs.
-
-## Engineering Domain
-
-Laboratory asset management (Education / Electronics lab).
-
-## Problem Statement
-
-In a shared electronics lab, students take resistors, capacitors, transistors and other parts for experiments. When this is tracked on paper or not at all, nobody knows how many parts are left, who is holding what, or when a component is about to run out. Students also take the wrong value or forget to return parts, and the lab assistant finds out only when an experiment fails for lack of parts.
-
-## Proposed Solution
-
-A menu-driven C application that keeps a fixed inventory of six component types. A student picks a component and an exact type (for example a *10k* resistor or a *BC547* transistor), and the program checks stock, records the borrower, and saves the data. Returns are checked against what that person actually holds. The program calculates utilisation, flags components as OK, LOW or OUT OF STOCK, and produces stock and issued reports.
-
-## Features
-
-- Take components: choose from a numbered list of real types (e.g. 9 resistor values, 5 transistor models)
-- Fixed quantity per component, with stock checked before every issue
-- Return components, with a check that the person really holds that item
-- Partial returns, and repeated issues of the same item merge into one record
-- Search by borrower name
-- Stock report sorted scarcest first, with utilisation % and OK / LOW / OUT OF STOCK status
-- Low-stock warning right after an issue
-- Issued-components report; report can be saved to a file
-- Data survives program restarts (saved after every change)
-- Safe against bad keyboard input and damaged data files
-
-## Functional Requirements Summary
-
-| ID | Requirement |
-|----|-------------|
-| FR-01 | The system shall issue a quantity of a component to a named borrower. |
-| FR-02 | The system shall let the user choose the specification from a list (not asked for jumper wires). |
-| FR-03 | The system shall refuse an issue larger than the available stock. |
-| FR-04 | The system shall merge repeated issues of the same item to the same borrower. |
-| FR-05 | The system shall accept returns only for items the borrower holds, up to the quantity held. |
-| FR-06 | The system shall stop a return immediately if the borrower never issued that component. |
-| FR-07 | The system shall validate all keyboard input and menu choices. |
-| FR-08 | The system shall save the inventory after every change and reload it at start-up. |
-| FR-09 | The system shall detect missing, empty, damaged or inconsistent data files and start safely. |
-| FR-10 | The system shall search issued records by borrower name. |
-| FR-11 | The system shall show a stock report with utilisation % and status, scarcest first. |
-| FR-12 | The system shall determine stock status (OUT / LOW / OK) and warn when stock becomes low. |
-| FR-13 | The system shall list all issued components. |
-| FR-14 | The system shall show all component types and specifications. |
-| FR-15 | The system shall save the report to a text file. |
-
-Full requirements: [docs/project_proposal.md](docs/project_proposal.md).
-
-## Software Architecture
-
-![Architecture diagram](docs/architecture.png)
-
-The program is split by responsibility. `main.c` only starts the program and runs the menu loop. The `ui` module talks to the user, the `inventory` module holds the rules, `validation` checks inputs, `file_handler` reads and writes the data file, and `report` formats the reports. The application flowchart is in [docs/flowchart.png](docs/flowchart.png). The full design (data dictionary, function specifications, validation plan, test plan) is in [docs/detailed_design.md](docs/detailed_design.md).
 
 ## Module Descriptions
 
@@ -203,63 +147,6 @@ Issuing that leaves a component low on stock (using the sample data):
 Issued 2 x MOSFET (IRF540) to Amit.
 Warning: only 3 MOSFET left in the lab.
 ```
-
-## Unit-Testing Summary
-
-69 tests in 4 test files, run with Google Test through `make test`. Every test builds its own fresh data, does not depend on test order, and removes its temporary files.
-
-| Test file | Tests | What it covers |
-|-----------|-------|----------------|
-| `test_validation.cpp` | 15 | Name rules, integer parsing, ranges, string helpers |
-| `test_inventory.cpp` | 25 | Issue, return, merge, capacity, search, utilisation, stock-level boundary at 20%, sorting |
-| `test_file_handler.cpp` | 17 | Save/load round trip, missing, empty and damaged files, inconsistent counts |
-| `test_report.cpp` | 12 | Report content and ordering, NULL arguments, saving a report |
-
-Positive, negative and boundary cases are all included, for example: quantity of exactly the stock level, one more than the stock level, name of exactly 29 and 30 characters, and 20% versus 21% stock.
-
-## Error-Handling Summary
-
-- Every operation that can fail returns a `StatusCode`, and callers check it
-- Keyboard input is read with `fgets` and parsed; wrong input is re-asked up to 3 times, then the user returns to the menu
-- Names, numbers, menu choices, component numbers and quantities are range-checked
-- NULL pointers and invalid indexes are rejected without crashing
-- A missing data file starts fresh; an empty, damaged or inconsistent file is detected, the user is warned, and the program starts with full stock
-- File open, write and close results are checked; a failed save shows a warning
-- Closing the input (Ctrl+D / end of file) exits cleanly and saves
-
-## Student Information
-
-| Field | Details |
-|-------|---------|
-| Student name | Shruti Lonkar |
-| Roll number |612507185|
-| Division / batch |EnTc Div 2|
-| Project title | Lab Component Tracker |
-
-## Known Limitations
-
-- The component list, quantities and specifications are fixed in the source code (`src/inventory.c`); changing them needs a recompile
-- Borrower names cannot contain spaces
-- No dates or due dates for returns; no user accounts or passwords
-- If the saved file is damaged, the program starts with full stock and overwrites it on the next save, so the old contents are lost
-- One run of the program at a time: two people running it on the same file at the same moment will overwrite each other's changes
-- Maximum of 100 separate issued records at once
-
-## Future Enhancements
-
-- Load the component catalogue from a configuration file
-- Record issue and return dates and flag overdue items
-- Keep per-specification stock (for example 85 x 10k resistors specifically)
-- Sort and filter issued records by name or date
-- Export reports as CSV
-- Allow names with spaces
-
-## GitHub Repository Link
-
-[PASTE YOUR GITHUB REPOSITORY LINK HERE]
-
-
----
 
 # Project Report
 
@@ -461,6 +348,8 @@ A menu-driven C application with a modular multi-file design.
 | FR-13 | report | `writeIssuedReport` | UT-63, UT-64 |
 | FR-14 | inventory, ui | `getComponentName`, `getSpecCount`, `handleViewSpecs` | UT-17 |
 | FR-15 | report | `saveReportToFile` | UT-68, UT-69 |
+
+Full requirements: [docs/project_proposal.md](docs/project_proposal.md).
 
 ---
 
@@ -745,34 +634,97 @@ Possible errors:
 
 ---
 
-## 7. Data Design
+## Folder Structure
 
-### 7.1 Structure Definitions
+```
+lab-component-tracker/
+|-- src/            main.c, ui.c, inventory.c, validation.c, file_handler.c, report.c
+|-- include/        lab_types.h and one header per module
+|-- tests/          test_validation.cpp, test_inventory.cpp,
+|                   test_file_handler.cpp, test_report.cpp   (Google Test)
+|-- data/           sample_data.txt   (inventory.txt is created when you run the program)
+|-- docs/           project_proposal.md, detailed_design.md,
+|                   architecture.png, flowchart.png (+ .dot sources)
+|-- Makefile
+|-- README.md
+`-- .gitignore
+```
 
-#### Structure: IssueRecord
+## C Concepts Used
 
-Purpose:
+- **Structures** (`IssueRecord`, `Inventory`) group the data instead of parallel arrays
+- **Enumerations** (`ComponentType`, `StatusCode`, `StockLevel`, `MenuChoice`) replace magic numbers
+- **Named constants** (`MAX_RECORDS`, `LOW_STOCK_PERCENT`, `NAME_SIZE` ...) for every limit and rule
+- **Pointers**: the inventory is passed by pointer, with NULL checks; output goes through `FILE *`
+- **Arrays and strings**: records, specification lists, hand-written string helpers (only `stdio.h` is used)
+- **File handling**: `fopen`, `fgets`, `sscanf`, `fprintf`, `fclose`, all checked
+- **Status codes**: every operation that can fail returns a `StatusCode`
+- **Static tables and functions**: the component catalogue and helpers are private to their module
 
-Represents one line in the log: a borrower holding a quantity of one component of one specification.
+## Coding Standards Followed
 
-Proposed definition:
+- Four-space indentation, no tabs in the C code, one statement per line
+- Descriptive verb-style function names (`issueComponent`, `findHeldRecords`, `saveInventory`)
+- UPPERCASE constants, header guards, no function bodies in headers
+- Comments describe purpose, parameters and return values in the headers
+- No global variables; no `scanf` / `gets` (input is read with `fgets` and parsed safely)
+- Compiled with `-Wall -Wextra -Wpedantic -std=c99` with zero warnings
 
-    typedef struct
-    {
-        char          borrower[NAME_SIZE];
-        ComponentType component;
-        char          spec[SPEC_SIZE];
-        int           quantity;
-    } IssueRecord;
+## Prerequisites
 
-Member details:
+- GCC and G++ (C99 and C++17 support), GNU Make
+- Google Test (only needed for `make test`)
 
-| Member | C Type | Valid Range or Size | Description |
-|---|---|---|---|
-| borrower | char[30] | 1 to 29 characters | Name of the person holding the items |
-| component | ComponentType | 0 to 5 | Kind of component |
-| spec | char[20] | one catalogue entry, or `-` | Specification such as `10k` or `BC547` |
-| quantity | int | 1 to the component total | Number of items held |
+On Ubuntu / Debian:
+
+```
+sudo apt install build-essential libgtest-dev
+```
+
+If linking the tests fails on an older Ubuntu, the package only ships the sources; build the library once:
+
+```
+cd /usr/src/googletest && sudo cmake . && sudo make && sudo cp lib/*.a /usr/lib
+```
+
+On Windows use WSL, or MSYS2 with `pacman -S mingw-w64-ucrt-x86_64-gcc make mingw-w64-ucrt-x86_64-gtest`.
+
+## Build Instructions
+
+```
+make all        # builds ./lab_tracker
+```
+
+Object files go to `build/`. Only changed files are rebuilt.
+
+## Run Instructions
+
+```
+make run                          # uses data/inventory.txt (created on first run)
+./lab_tracker                     # same thing
+./lab_tracker my_data.txt         # use a different data file
+```
+
+To try the program with example data without touching the sample file:
+
+```
+cp data/sample_data.txt data/inventory.txt
+make run
+```
+
+## Test Instructions
+
+```
+make test
+```
+
+If Google Test is installed somewhere unusual:
+
+```
+make test GTEST_INC="-isystem /path/to/include" GTEST_LIB="-L/path/to/lib"
+```
+
+Remove everything generated with `make clean`.
 
 #### Structure: Inventory
 
