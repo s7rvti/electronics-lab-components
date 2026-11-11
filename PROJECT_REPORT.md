@@ -24,9 +24,7 @@ Electronics
 
 I confirm that this project is my individual work. I understand the design, source code, unit tests, Makefile and documentation included in this repository, and I am prepared to explain or modify any part during evaluation.
 
-Student signature or acknowledgement:
-
-[Enter your acknowledgement here]
+I would like to thank Dr. Ashwini Dharmadhikari ma'am and Parag Narkhede sir for guiding and supporting me throughout the project.
 
 ---
 
@@ -1737,7 +1735,6 @@ Final project structure:
     |-- README.md
     |-- PROJECT_REPORT.md
     |-- .gitignore
-    `-- LICENSE
 
 `data/inventory.txt` and `data/stock_report.txt` are created when the program runs and are not committed.
 
@@ -1912,29 +1909,26 @@ Confirm that README.md contains:
 
 ## 22.1 What Worked Well?
 
-[Write your own response here]
+Splitting the program into separate modules (validation, inventory, file handling, reports and user interface) worked well, because each part could be built and tested on its own. Keeping the logic away from keyboard input meant the important functions could be checked with unit tests, including boundary cases such as the 20% low-stock rule and damaged data files. The Makefile (make all, make test, make run, make clean) made the build repeatable, and GitHub Codespaces gave me a working Linux environment even though I use Windows.
 
 ## 22.2 Challenges Faced
 
-[Write your own response here]
+My first challenge was the environment: the project needs make, gcc and Google Test, and I am on Windows. When I ran make test, it failed with “gtest/gtest.h: No such file or directory” because Google Test was not installed. Later, my first git push was rejected because the remote repository already had a commit, and my local PROJECT_REPORT.md would have been overwritten by the pull. I also found the multi-module design harder to follow than a single-file program, with structures, status codes and several headers.
 
 ## 22.3 How Were the Challenges Resolved?
 
-[Write your own response here]
+I used GitHub Codespaces for a ready Linux terminal, then installed Google Test with sudo apt install libgtest-dev, after which all 69 tests passed. For the rejected push, I moved my report file aside, ran git pull --rebase so my commits sat on top of the remote one, pushed, and put my file back; I did not force-push, so nothing was lost. To understand the design, I read each module together with its tests before committing it.
 
 ## 22.4 What Did You Learn?
 
 Discuss learning related to:
 
-- C programming
-- Modular design
-- Coding standards
-- Unit testing
-- Makefiles
-- Git
-- GitHub
-
-[Write your own response here]
+C programming: using structures and enumerations instead of loose variables, passing data by pointer with NULL checks, reading input with fgets and parsing it safely instead of using scanf, and checking every file operation.
+Modular design: keeping logic, input/output, validation, file handling and reports in separate modules with their own headers, and having no global variables.
+Coding standards: consistent naming, four-space indentation, named constants instead of magic numbers, and compiling with -Wall -Wextra -Wpedantic with no warnings.
+Unit testing: writing positive, negative and boundary tests with Google Test, making tests independent of each other, and using temporary files that are cleaned up.
+Makefiles: separate targets for building, running, testing and cleaning, and rebuilding only the files that changed.
+Git and GitHub: committing in stages with meaningful messages, pulling with rebase when the remote has changed, and handling a rejected push safely.
 
 ## 22.5 Known Limitations
 
@@ -2010,7 +2004,7 @@ Discuss learning related to:
 
 - [ ] Git was used throughout development.
 - [ ] Multiple meaningful commits are present.
-- [ ] .gitignore is configured.
+- [x] .gitignore is configured.
 - [ ] Generated files are not committed.
 - [ ] GitHub contains the complete project.
 - [ ] The repository was cloned and verified independently.
@@ -2086,4 +2080,4 @@ Clean command:
 
 Submission date:
 
-[Enter submission date]
+11/11/2026
